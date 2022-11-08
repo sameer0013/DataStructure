@@ -7,6 +7,7 @@ public class Main{
         char ch;
         HashMap<Character,Node> children;
         boolean isEnd;
+        int count;
         Node(char ch){
             this.ch = ch;
             this.children = new HashMap<>();
@@ -41,6 +42,14 @@ public class Main{
         void unMarkEndOfWord(){
             this.isEnd = false;
         }
+
+        int getCount(){
+            return this.count;
+        }
+
+        void changeCount(int vl){
+            this.count = vl;
+        }
     }
     static class Trie{
         
@@ -51,6 +60,7 @@ public class Main{
 
         void insert(String word){
             Node ptr = root;
+            ptr.changeCount(ptr.getCount()+1);
             for(int i=0;i<word.length();i++){
                 char ch = word.charAt(i);
                 if(ptr.hasChild(ch)){
@@ -58,7 +68,7 @@ public class Main{
                 }else{
                     ptr = ptr.addChild(ch);
                 }
-
+                ptr.changeCount(ptr.getCount()+1);
             }
             ptr.markEndOfWord();
         }
@@ -88,19 +98,20 @@ public class Main{
 
                 
             }
-            return true;
+            return ptr.getCount()>0;
         }
 
         void remove(String word){
+            if(!search(word)) return;
+
             Node ptr = root;
+            ptr.changeCount(ptr.getCount()-1);
             for(int i=0;i<word.length();i++){
                 char ch = word.charAt(i);
                 if(ptr.hasChild(ch)){
                     ptr = ptr.getChild(ch);
-                }else{
-                    return;
                 }
-
+                ptr.changeCount(ptr.getCount()-1);
                 
             }
             ptr.unMarkEndOfWord();;
