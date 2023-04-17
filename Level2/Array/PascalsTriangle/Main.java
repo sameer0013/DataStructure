@@ -8,7 +8,7 @@ public class Main{
             ans.add(new ArrayList<>());
             ans.get(i).add(1);
             for(int j=1;j<i;j++){
-                ans.get(i).add(ans.get(i-1).get(j-1) + ans.get(i-1).get(j));
+                ans.get(i).add(ans.get(i-1).get(j-1) +ans.get(i-1).get(j));
             }
             ans.get(i).add(1);
         }
